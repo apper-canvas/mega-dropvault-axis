@@ -8,8 +8,8 @@ const ShareModal = ({ upload, isOpen, onClose }) => {
   if (!upload) return null;
   
   const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(upload.shareLink);
+try {
+      await navigator.clipboard.writeText(upload.share_link_c);
       toast.success("Share link copied to clipboard!");
     } catch (error) {
       toast.error("Failed to copy link");
@@ -17,12 +17,12 @@ const ShareModal = ({ upload, isOpen, onClose }) => {
   };
   
   const handleShare = (platform) => {
-    const shareText = `Check out these files I uploaded: ${upload.shareLink}`;
+const shareText = `Check out these files I uploaded: ${upload.share_link_c}`;
     
     const shareUrls = {
       twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`,
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(upload.shareLink)}`,
-      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(upload.shareLink)}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(upload.share_link_c)}`,
+linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(upload.share_link_c)}`,
       email: `mailto:?subject=Shared Files&body=${encodeURIComponent(shareText)}`
     };
     
@@ -66,8 +66,8 @@ const ShareModal = ({ upload, isOpen, onClose }) => {
               <div className="flex items-center space-x-3">
                 <div className="flex-1 min-w-0">
                   <p className="text-xs text-gray-400 mb-1">Share Link</p>
-                  <p className="text-sm text-white truncate font-mono">
-                    {upload.shareLink}
+<p className="text-sm text-white truncate font-mono">
+                    {upload.share_link_c}
                   </p>
                 </div>
                 <Button
@@ -130,12 +130,12 @@ const ShareModal = ({ upload, isOpen, onClose }) => {
             <div className="mt-6 pt-4 border-t border-gray-700">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">Files:</span>
-                <span className="text-white">{upload.files.length}</span>
+<span className="text-white">{upload.files_c ? upload.files_c.length : 0}</span>
               </div>
               <div className="flex justify-between text-sm mt-1">
                 <span className="text-gray-400">Expires:</span>
                 <span className="text-white">
-                  {new Date(upload.expiresAt).toLocaleDateString()}
+                  {new Date(upload.expires_at_c).toLocaleDateString()}
                 </span>
               </div>
             </div>

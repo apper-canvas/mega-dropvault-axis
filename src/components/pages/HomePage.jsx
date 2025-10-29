@@ -22,21 +22,23 @@ const HomePage = () => {
     successRate: 100
   });
 
-  const handleUploadComplete = (upload) => {
+const handleUploadComplete = (upload) => {
     setCurrentUpload(upload);
     setShowSuccessCard(true);
     
-    // Update stats
+    // Update stats - use new field names
     setUploadStats(prev => ({
-      totalFiles: prev.totalFiles + upload.files.length,
-      totalSize: prev.totalSize + upload.totalSize,
+      totalFiles: prev.totalFiles + (upload.files_c ? upload.files_c.length : 0),
+      totalSize: prev.totalSize + (upload.total_size_c || 0),
       successRate: 100 // Simulate perfect success rate for demo
     }));
     
-    // Auto-copy share link
-    navigator.clipboard.writeText(upload.shareLink).then(() => {
-      toast.success("Share link copied to clipboard!");
-    });
+    // Auto-copy share link - use new field name
+    if (upload.share_link_c) {
+      navigator.clipboard.writeText(upload.share_link_c).then(() => {
+        toast.success("Share link copied to clipboard!");
+      });
+    }
   };
 
   const handleFilePreview = (file) => {
@@ -99,12 +101,12 @@ const HomePage = () => {
                         transition={{ delay: 0.4 }}
                         className="space-y-2 mb-4"
                       >
-                        <p className="text-gray-300">
-                          Successfully uploaded {currentUpload.files.length} {currentUpload.files.length === 1 ? "file" : "files"} 
-                          ({formatFileSize(currentUpload.totalSize)})
+<p className="text-gray-300">
+                          Successfully uploaded {currentUpload.files_c ? currentUpload.files_c.length : 0} {currentUpload.files_c && currentUpload.files_c.length === 1 ? "file" : "files"} 
+                          ({formatFileSize(currentUpload.total_size_c || 0)})
                         </p>
                         <p className="text-sm text-gray-400 font-mono">
-                          Share link: {currentUpload.shareLink}
+                          Share link: {currentUpload.share_link_c}
                         </p>
                       </motion.div>
                       

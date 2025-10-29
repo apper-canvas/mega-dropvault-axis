@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
-
+import { useAuth } from "@/layouts/Root";
+import { useSelector } from "react-redux";
 const Header = ({ onShowStats }) => {
+  const { logout } = useAuth();
+  const { user } = useSelector((state) => state.user);
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
@@ -46,7 +50,7 @@ const Header = ({ onShowStats }) => {
               </div>
             </div>
             
-            <Button
+<Button
               variant="outline"
               size="sm"
               icon="BarChart3"
@@ -56,6 +60,17 @@ const Header = ({ onShowStats }) => {
               Stats
             </Button>
             
+            {user && (
+              <Button
+                variant="ghost"
+                size="sm"
+                icon="LogOut"
+                onClick={logout}
+                className="hidden md:flex"
+              >
+                Logout
+              </Button>
+            )}
             <Button
               variant="ghost"
               size="icon"
